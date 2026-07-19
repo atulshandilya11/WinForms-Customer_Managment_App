@@ -1,5 +1,5 @@
 <Solution>
   <Project Path="../BusinessLogicCustomer/BusinessLogicCustomer.csproj" />
-  <Project Path="../CustomerUIForSuperUser/CustomerUIForSuperUser.csproj" />
+  <Project Path="../Dal/Dal.csproj" Id="9b73dbe8-fbdf-481b-b711-43088154f3f5" />
   <Project Path="CustomerProject.csproj" />
 </Solution>

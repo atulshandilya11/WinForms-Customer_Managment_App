@@ -1,5 +1,7 @@
 using BusinessLogicCustomer;
+using Dal;
 namespace CustomerProject
+
 {
     public partial class CustomerUI : Form
     {
@@ -32,10 +34,13 @@ namespace CustomerProject
                 Customer custobj = new Customer();
                 custobj.CustomerName = txtCustomerName.Text;
                 custobj.PhoneNumber = txtPhoneNumber.Text;
-                custobj.ProductNmae = txtProductName.Text;
+                custobj.ProductName = txtProductName.Text;
                 custobj.BillAmount = Convert.ToDecimal(txtBillAmount.Text);
-                custobj.validate();
-
+                if (custobj.validate())
+                {
+                    CustomerDal dal = new CustomerDal();
+                    dal.Add(custobj);
+                }
             }
             catch (Exception ex)
             {
