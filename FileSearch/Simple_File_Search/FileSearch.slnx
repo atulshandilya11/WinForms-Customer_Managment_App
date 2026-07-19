@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="../FILESearch/FILESearch.csproj" />
+  <Project Path="../FIleSearchWindows/FIleSearchWindows.csproj" />
+  <Project Path="Lab3.csproj" />
+</Solution>
