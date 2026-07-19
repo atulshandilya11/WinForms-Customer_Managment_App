@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="../BusinessLogicCustomer/BusinessLogicCustomer.csproj" />
+  <Project Path="../CustomerUIForSuperUser/CustomerUIForSuperUser.csproj" />
+  <Project Path="CustomerProject.csproj" />
+</Solution>

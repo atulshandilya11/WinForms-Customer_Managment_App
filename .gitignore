@@ -1,5 +1,15 @@
+# Visual Studio
 .vs/
-**/bin/
-**/obj/
 
-Customer_Project/
+# Build folders
+bin/
+obj/
+
+# User-specific files
+*.user
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
