@@ -6,10 +6,11 @@ using System.Configuration;
 namespace CustomerProject
 
 {
+
     public partial class CustomerUI : Form
     {
-
-
+        private List<Customer> customers = new List<Customer>();
+        private Customer selectedCustomer = new Customer();
         public CustomerUI()
         {
             InitializeComponent();
@@ -19,8 +20,21 @@ namespace CustomerProject
             try
             {
                 CustomerDal dal = new CustomerDal();
-                DataSet Customers = dal.Read();
-                dtgCustomers.DataSource = Customers.Tables[0];
+                customers = dal.Read();
+                dtgCustomers.DataSource = customers;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void LoadGridInMemory()
+        {
+            try
+            {
+                dtgCustomers.DataSource = null;
+
+                dtgCustomers.DataSource = customers;
             }
             catch (Exception ex)
             {
@@ -54,9 +68,9 @@ namespace CustomerProject
                 custobj.BillAmount = Convert.ToDecimal(txtBillAmount.Text);
                 if (custobj.validate())
                 {
-                    CustomerDal dal = new CustomerDal();
-                    dal.Add(custobj);
+                    customers.Add(custobj);
                 }
+                LoadGridInMemory(); ClearUI();
             }
             catch (Exception ex)
             {
@@ -90,15 +104,27 @@ namespace CustomerProject
             cmbProduct.ValueMember = "ProductId";
             cmbProduct.DataSource = dal.ReadProducts().Tables[0];
         }
-         
+
         private void dtgCustomers_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             int rowselected = e.RowIndex;
-            txtId.Text = dtgCustomers.Rows[rowselected].Cells[0].Value.ToString();
-            txtCustomerName.Text = dtgCustomers.Rows[rowselected].Cells[1].Value.ToString();
-            txtPhoneNumber.Text = dtgCustomers.Rows[rowselected].Cells[2].Value.ToString();
-            txtBillAmount.Text = dtgCustomers.Rows[rowselected].Cells[3].Value.ToString();
-            cmbProduct.Text = dtgCustomers.Rows[rowselected].Cells[4].Value.ToString();
+            selectedCustomer = customers[rowselected];
+            LoadCustomer();
+            //txtId.Text = dtgCustomers.Rows[rowselected].Cells[0].Value.ToString();
+            //txtCustomerName.Text = dtgCustomers.Rows[rowselected].Cells[1].Value.ToString();
+            //txtPhoneNumber.Text = dtgCustomers.Rows[rowselected].Cells[2].Value.ToString();
+            //txtBillAmount.Text = dtgCustomers.Rows[rowselected].Cells[3].Value.ToString();
+            //cmbProduct.Text = dtgCustomers.Rows[rowselected].Cells[4].Value.ToString();
+
+        }
+
+        private void LoadCustomer()
+        {
+            txtId.Text = selectedCustomer.CustomerId.ToString();
+            txtCustomerName.Text = selectedCustomer.CustomerName;
+            txtPhoneNumber.Text = selectedCustomer.PhoneNumber;
+            txtBillAmount.Text = selectedCustomer.BillAmount.ToString();
+            cmbProduct.Text = selectedCustomer.ProductName;
 
         }
 
@@ -107,15 +133,13 @@ namespace CustomerProject
             // Loading the values from UI
             Customer updatedCustomer = new Customer();
             //updatedCustomer.CustomerId = (int)Convert.ToDecimal(txtId.Text);
-            updatedCustomer.CustomerName = txtCustomerName.Text;
-            updatedCustomer.PhoneNumber =  txtPhoneNumber.Text;
-            updatedCustomer.ProductId = Convert.ToInt16(cmbProduct.SelectedValue);
-            updatedCustomer.BillAmount =   Convert.ToDecimal(txtBillAmount.Text);
-            // Updating the server
-            CustomerDal dal = new CustomerDal();
-            dal.Update(updatedCustomer, Convert.ToInt16(txtId.Text));
+            selectedCustomer.CustomerName = txtCustomerName.Text;
+            selectedCustomer.PhoneNumber = txtPhoneNumber.Text;
+            selectedCustomer.ProductId = Convert.ToInt16(cmbProduct.SelectedValue);
+            selectedCustomer.BillAmount = Convert.ToDecimal(txtBillAmount.Text);
+
             // Refreshing the grid
-            LoadGrid();
+            LoadGridInMemory();
 
             ClearUI();
         }
@@ -126,15 +150,34 @@ namespace CustomerProject
             txtPhoneNumber.Text = "";
             txtBillAmount.Text = "";
             cmbProduct.SelectedIndex = -1;
-            txtCustomerName.Text = "";
+            selectedCustomer = new Customer();
+
+
 
         }
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            foreach( var tem in customers)
+            {
+                if ( selectedCustomer.CustomerId == tem.CustomerId)
+                {
+                    tem.IsDeleted = true;
+                    return;
+                }
+            }
+            customers.Remove(selectedCustomer);
+            LoadGridInMemory(); ClearUI();
+            //CustomerDal dal = new CustomerDal();
+            //dal.Delete(Convert.ToInt16(txtId.Text));
+            //LoadGrid(); ClearUI();
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
             CustomerDal dal = new CustomerDal();
-            dal.Delete(Convert.ToInt16(txtId.Text));
-            LoadGrid(); ClearUI();
-               
+                dal.SaveAll(customers);
+            LoadGrid();
         }
     }
 }

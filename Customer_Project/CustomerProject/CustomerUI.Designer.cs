@@ -42,6 +42,7 @@
             btnUpdate = new Button();
             btnDelete = new Button();
             cmbProduct = new ComboBox();
+            btnSaveAll = new Button();
             ((System.ComponentModel.ISupportInitialize)dtgCustomers).BeginInit();
             SuspendLayout();
             // 
@@ -172,12 +173,23 @@
             cmbProduct.Size = new Size(242, 40);
             cmbProduct.TabIndex = 14;
             // 
+            // btnSaveAll
+            // 
+            btnSaveAll.Location = new Point(1045, 238);
+            btnSaveAll.Name = "btnSaveAll";
+            btnSaveAll.Size = new Size(150, 46);
+            btnSaveAll.TabIndex = 15;
+            btnSaveAll.Text = "Save ALL";
+            btnSaveAll.UseVisualStyleBackColor = true;
+            btnSaveAll.Click += button1_Click;
+            // 
             // CustomerUI
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(1638, 1012);
+            Controls.Add(btnSaveAll);
             Controls.Add(cmbProduct);
             Controls.Add(btnDelete);
             Controls.Add(btnUpdate);
@@ -216,5 +228,6 @@
         private Button btnUpdate;
         private Button btnDelete;
         private ComboBox cmbProduct;
+        private Button btnSaveAll;
     }
 }
