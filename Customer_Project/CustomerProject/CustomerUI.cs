@@ -1,6 +1,8 @@
 using BusinessLogicCustomer;
 using Dal;
 using System.Data;
+using System.Configuration;
+
 namespace CustomerProject
 
 {
@@ -69,7 +71,14 @@ namespace CustomerProject
         }
 
         private void CustomerUI_Load(object sender, EventArgs e)
+
         {
+            this.Text = ConfigurationManager.AppSettings["NameOfTheApp"].ToString();
+            btnAdd.Text = ConfigurationManager.AppSettings["AddButton"].ToString();
+            btnUpdate.Text = ConfigurationManager.AppSettings["UpdateButton"].ToString();
+            btnDelete.Text = ConfigurationManager.AppSettings["DeleteButton"].ToString();
+
+
             LoadGrid();
         }
 

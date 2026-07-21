@@ -1,20 +1,26 @@
 ﻿using BusinessLogicCustomer; 
-using System.Data;
-using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Protocols;
+using System.Configuration;
+using System.Data;
 namespace Dal
 {
     public class CustomerDal
 
     {
+        public SqlConnection CreateConnection()
+        {
+            string connstr = ConfigurationManager.ConnectionStrings["MyConnectionString"].ConnectionString;
+            SqlConnection conn = new SqlConnection(connstr);
+            conn.Open();
+            return conn;
+        }
         public bool Delete(int CustomerId)
         {
             // step 1 open connection
             try
             {
-                string connstr = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=CustomerDb;Integrated Security=True;Trust Server Certificate=True";
-                SqlConnection conn = new SqlConnection(connstr);
-                conn.Open();
+                SqlConnection conn = CreateConnection();
                 // 2. sql --. command
 
                 SqlCommand command = new SqlCommand();
@@ -37,9 +43,8 @@ namespace Dal
             // step 1 open connection
             try
             {
-                string connstr = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=CustomerDb;Integrated Security=True;Trust Server Certificate=True";
-                SqlConnection conn = new SqlConnection(connstr);
-                conn.Open();
+                SqlConnection conn = CreateConnection();
+
                 // 2. sql --. command
 
                 SqlCommand command = new SqlCommand();
@@ -70,13 +75,12 @@ namespace Dal
         public bool Add (Customer obj)
         {
             // step 1 open connection
-            try { 
-            string connstr = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=CustomerDb;Integrated Security=True;Trust Server Certificate=True";
-            SqlConnection conn = new SqlConnection(connstr);
-                conn.Open();
-            // 2. sql --. command
+            try {
+                SqlConnection conn = CreateConnection();
 
-            SqlCommand command = new SqlCommand();
+                // 2. sql --. command
+
+                SqlCommand command = new SqlCommand();
             command.Connection = conn;
                 command.CommandText =
           "INSERT INTO tblCustomer (CustomerName, PhoneNumber, ProductName, BillAmount) " +
@@ -99,9 +103,8 @@ namespace Dal
             // step 1 open connection
             try
             {
-                string connstr = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=CustomerDb;Integrated Security=True;Trust Server Certificate=True";
-                SqlConnection conn = new SqlConnection(connstr);
-                conn.Open();
+                SqlConnection conn = CreateConnection();
+
                 // 2. sql --. command
 
                 SqlCommand command = new SqlCommand();
