@@ -37,14 +37,18 @@
             lblProductName = new Label();
             txtBillAmount = new TextBox();
             lblBillAmount = new Label();
-            dataGridView1 = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            dtgCustomers = new DataGridView();
+            lblId = new Label();
+            txtId = new TextBox();
+            btnUpdate = new Button();
+            btnDelete = new Button();
+            ((System.ComponentModel.ISupportInitialize)dtgCustomers).BeginInit();
             SuspendLayout();
             // 
             // lblCustomerName
             // 
             lblCustomerName.AutoSize = true;
-            lblCustomerName.Location = new Point(12, 30);
+            lblCustomerName.Location = new Point(12, 99);
             lblCustomerName.Name = "lblCustomerName";
             lblCustomerName.Size = new Size(181, 32);
             lblCustomerName.TabIndex = 0;
@@ -53,14 +57,14 @@
             // 
             // txtCustomerName
             // 
-            txtCustomerName.Location = new Point(279, 23);
+            txtCustomerName.Location = new Point(279, 92);
             txtCustomerName.Name = "txtCustomerName";
             txtCustomerName.Size = new Size(458, 39);
             txtCustomerName.TabIndex = 1;
             // 
             // btnAdd
             // 
-            btnAdd.Location = new Point(711, 162);
+            btnAdd.Location = new Point(279, 238);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(150, 46);
             btnAdd.TabIndex = 2;
@@ -87,7 +91,7 @@
             // 
             // txtProductName
             // 
-            txtProductName.Location = new Point(279, 92);
+            txtProductName.Location = new Point(279, 164);
             txtProductName.Name = "txtProductName";
             txtProductName.Size = new Size(458, 39);
             txtProductName.TabIndex = 6;
@@ -95,7 +99,7 @@
             // lblProductName
             // 
             lblProductName.AutoSize = true;
-            lblProductName.Location = new Point(12, 92);
+            lblProductName.Location = new Point(12, 167);
             lblProductName.Name = "lblProductName";
             lblProductName.Size = new Size(167, 32);
             lblProductName.TabIndex = 5;
@@ -119,14 +123,53 @@
             lblBillAmount.Text = "Bill Amount";
             lblBillAmount.Click += lblBillAmount_Click;
             // 
-            // dataGridView1
+            // dtgCustomers
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(-15, 288);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 82;
-            dataGridView1.Size = new Size(1646, 712);
-            dataGridView1.TabIndex = 9;
+            dtgCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dtgCustomers.Location = new Point(-15, 416);
+            dtgCustomers.Name = "dtgCustomers";
+            dtgCustomers.RowHeadersWidth = 82;
+            dtgCustomers.Size = new Size(1646, 584);
+            dtgCustomers.TabIndex = 9;
+            dtgCustomers.CellContentClick += dataGridView1_CellContentClick;
+            dtgCustomers.RowEnter += dtgCustomers_RowEnter;
+            // 
+            // lblId
+            // 
+            lblId.AutoSize = true;
+            lblId.Location = new Point(12, 33);
+            lblId.Name = "lblId";
+            lblId.Size = new Size(34, 32);
+            lblId.TabIndex = 10;
+            lblId.Text = "Id";
+            // 
+            // txtId
+            // 
+            txtId.Enabled = false;
+            txtId.Location = new Point(279, 23);
+            txtId.Name = "txtId";
+            txtId.Size = new Size(458, 39);
+            txtId.TabIndex = 11;
+            // 
+            // btnUpdate
+            // 
+            btnUpdate.Location = new Point(497, 238);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(150, 46);
+            btnUpdate.TabIndex = 12;
+            btnUpdate.Text = "Update";
+            btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUPdate_Click;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(709, 238);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(150, 46);
+            btnDelete.TabIndex = 13;
+            btnDelete.Text = "Delete";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // CustomerUI
             // 
@@ -134,7 +177,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(1638, 1012);
-            Controls.Add(dataGridView1);
+            Controls.Add(btnDelete);
+            Controls.Add(btnUpdate);
+            Controls.Add(txtId);
+            Controls.Add(lblId);
+            Controls.Add(dtgCustomers);
             Controls.Add(txtBillAmount);
             Controls.Add(lblBillAmount);
             Controls.Add(txtProductName);
@@ -146,7 +193,8 @@
             Controls.Add(lblCustomerName);
             Name = "CustomerUI";
             Text = "Customer Managment Application";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            Load += CustomerUI_Load;
+            ((System.ComponentModel.ISupportInitialize)dtgCustomers).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -162,6 +210,10 @@
         private Label lblProductName;
         private TextBox txtBillAmount;
         private Label lblBillAmount;
-        private DataGridView dataGridView1;
+        private DataGridView dtgCustomers;
+        private Label lblId;
+        private TextBox txtId;
+        private Button btnUpdate;
+        private Button btnDelete;
     }
 }

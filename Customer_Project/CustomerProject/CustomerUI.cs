@@ -1,15 +1,29 @@
 using BusinessLogicCustomer;
 using Dal;
+using System.Data;
 namespace CustomerProject
 
 {
     public partial class CustomerUI : Form
     {
 
-        
+
         public CustomerUI()
         {
             InitializeComponent();
+        }
+        private void LoadGrid()
+        {
+            try
+            {
+                CustomerDal dal = new CustomerDal();
+                DataSet Customers = dal.Read();
+                dtgCustomers.DataSource = Customers.Tables[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void lblCustomerName_Click(object sender, EventArgs e)
@@ -46,7 +60,60 @@ namespace CustomerProject
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void CustomerUI_Load(object sender, EventArgs e)
+        {
+            LoadGrid();
+        }
+
+        private void dtgCustomers_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            int rowselected = e.RowIndex;
+            txtId.Text = dtgCustomers.Rows[rowselected].Cells[0].Value.ToString();
+            txtCustomerName.Text = dtgCustomers.Rows[rowselected].Cells[1].Value.ToString();
+            txtPhoneNumber.Text = dtgCustomers.Rows[rowselected].Cells[2].Value.ToString();
+            txtProductName.Text = dtgCustomers.Rows[rowselected].Cells[4].Value.ToString();
+            txtBillAmount.Text = dtgCustomers.Rows[rowselected].Cells[3].Value.ToString();
+        }
+
+        private void btnUPdate_Click(object sender, EventArgs e)
+        {
+            // Loading the values from UI
+            Customer updatedCustomer = new Customer();
+            //updatedCustomer.CustomerId = (int)Convert.ToDecimal(txtId.Text);
+            updatedCustomer.CustomerName = txtCustomerName.Text;
+            updatedCustomer.PhoneNumber =  txtPhoneNumber.Text;
+            updatedCustomer.ProductName =  txtProductName.Text;
+            updatedCustomer.BillAmount =   Convert.ToDecimal(txtBillAmount.Text);
+            // Updating the server
+            CustomerDal dal = new CustomerDal();
+            dal.Update(updatedCustomer, Convert.ToInt16(txtId.Text));
+            // Refreshing the grid
+            LoadGrid();
+
+            ClearUI();
+        }
+        private void ClearUI()
+        {
+            txtCustomerName.Text = "";
+            txtPhoneNumber.Text = "";
+            txtProductName.Text = "";
+           txtCustomerName.Text = "";
+
+        }
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            CustomerDal dal = new CustomerDal();
+            dal.Delete(Convert.ToInt16(txtId.Text));
+            LoadGrid(); ClearUI();
+               
         }
     }
 }
