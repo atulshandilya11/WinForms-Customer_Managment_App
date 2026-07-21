@@ -50,7 +50,7 @@ namespace CustomerProject
                 Customer custobj = new Customer();
                 custobj.CustomerName = txtCustomerName.Text;
                 custobj.PhoneNumber = txtPhoneNumber.Text;
-                custobj.ProductName = txtProductName.Text;
+                custobj.ProductId = Convert.ToInt16(cmbProduct.SelectedValue);
                 custobj.BillAmount = Convert.ToDecimal(txtBillAmount.Text);
                 if (custobj.validate())
                 {
@@ -80,16 +80,26 @@ namespace CustomerProject
 
 
             LoadGrid();
+            FillProducts();
         }
 
+        private void FillProducts()
+        {
+            CustomerDal dal = new CustomerDal();
+            cmbProduct.DisplayMember = "ProductName";
+            cmbProduct.ValueMember = "ProductId";
+            cmbProduct.DataSource = dal.ReadProducts().Tables[0];
+        }
+         
         private void dtgCustomers_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             int rowselected = e.RowIndex;
             txtId.Text = dtgCustomers.Rows[rowselected].Cells[0].Value.ToString();
             txtCustomerName.Text = dtgCustomers.Rows[rowselected].Cells[1].Value.ToString();
             txtPhoneNumber.Text = dtgCustomers.Rows[rowselected].Cells[2].Value.ToString();
-            txtProductName.Text = dtgCustomers.Rows[rowselected].Cells[4].Value.ToString();
             txtBillAmount.Text = dtgCustomers.Rows[rowselected].Cells[3].Value.ToString();
+            cmbProduct.Text = dtgCustomers.Rows[rowselected].Cells[4].Value.ToString();
+
         }
 
         private void btnUPdate_Click(object sender, EventArgs e)
@@ -99,7 +109,7 @@ namespace CustomerProject
             //updatedCustomer.CustomerId = (int)Convert.ToDecimal(txtId.Text);
             updatedCustomer.CustomerName = txtCustomerName.Text;
             updatedCustomer.PhoneNumber =  txtPhoneNumber.Text;
-            updatedCustomer.ProductName =  txtProductName.Text;
+            updatedCustomer.ProductId = Convert.ToInt16(cmbProduct.SelectedValue);
             updatedCustomer.BillAmount =   Convert.ToDecimal(txtBillAmount.Text);
             // Updating the server
             CustomerDal dal = new CustomerDal();
@@ -111,10 +121,12 @@ namespace CustomerProject
         }
         private void ClearUI()
         {
+            txtId.Text = "";
             txtCustomerName.Text = "";
             txtPhoneNumber.Text = "";
-            txtProductName.Text = "";
-           txtCustomerName.Text = "";
+            txtBillAmount.Text = "";
+            cmbProduct.SelectedIndex = -1;
+            txtCustomerName.Text = "";
 
         }
         private void btnDelete_Click(object sender, EventArgs e)

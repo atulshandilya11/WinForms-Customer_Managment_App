@@ -33,7 +33,6 @@
             btnAdd = new Button();
             txtPhoneNumber = new TextBox();
             lblPhoneNumer = new Label();
-            txtProductName = new TextBox();
             lblProductName = new Label();
             txtBillAmount = new TextBox();
             lblBillAmount = new Label();
@@ -42,6 +41,7 @@
             txtId = new TextBox();
             btnUpdate = new Button();
             btnDelete = new Button();
+            cmbProduct = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)dtgCustomers).BeginInit();
             SuspendLayout();
             // 
@@ -88,13 +88,6 @@
             lblPhoneNumer.TabIndex = 3;
             lblPhoneNumer.Text = "Phone Number";
             lblPhoneNumer.Click += lblPhoneNumer_Click;
-            // 
-            // txtProductName
-            // 
-            txtProductName.Location = new Point(279, 164);
-            txtProductName.Name = "txtProductName";
-            txtProductName.Size = new Size(458, 39);
-            txtProductName.TabIndex = 6;
             // 
             // lblProductName
             // 
@@ -171,12 +164,21 @@
             btnDelete.UseVisualStyleBackColor = true;
             btnDelete.Click += btnDelete_Click;
             // 
+            // cmbProduct
+            // 
+            cmbProduct.FormattingEnabled = true;
+            cmbProduct.Location = new Point(279, 159);
+            cmbProduct.Name = "cmbProduct";
+            cmbProduct.Size = new Size(242, 40);
+            cmbProduct.TabIndex = 14;
+            // 
             // CustomerUI
             // 
             AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(1638, 1012);
+            Controls.Add(cmbProduct);
             Controls.Add(btnDelete);
             Controls.Add(btnUpdate);
             Controls.Add(txtId);
@@ -184,7 +186,6 @@
             Controls.Add(dtgCustomers);
             Controls.Add(txtBillAmount);
             Controls.Add(lblBillAmount);
-            Controls.Add(txtProductName);
             Controls.Add(lblProductName);
             Controls.Add(txtPhoneNumber);
             Controls.Add(lblPhoneNumer);
@@ -206,7 +207,6 @@
         private Button btnAdd;
         private TextBox txtPhoneNumber;
         private Label lblPhoneNumer;
-        private TextBox txtProductName;
         private Label lblProductName;
         private TextBox txtBillAmount;
         private Label lblBillAmount;
@@ -215,5 +215,6 @@
         private TextBox txtId;
         private Button btnUpdate;
         private Button btnDelete;
+        private ComboBox cmbProduct;
     }
 }
